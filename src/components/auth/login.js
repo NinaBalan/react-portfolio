@@ -24,29 +24,32 @@ export default class Login extends Component {
     }
 
     handleSubmit(event) {
-        axios.post("https://api.devcamp.space/sessions",
-        {
-            client: {
-                email: this.state.email,
-                password: this.state.password
-            }
-        },
-            { withCredentials: true }
-        )
+        axios
+           .post(
+               "https://api.devcamp.space/sessions",
+               {
+                   client: {
+                      email: this.state.email,
+                      password: this.state.password
+                    }
+                },
+                { withCredentials: true }
+            )
             .then(response => {
                 if (response.data.status ==='created') {
-                    console.log("You can come in...")
-                } else {
+                    this.props.handleSuccessfulAuth();
+                    } else {
                     this.setState({
                         errorText: "Wrong email or password"
                     });
+                    this.props.handleUnsuccessfulAuth();
                 }
             })
             .catch(error => {
-                console.log("some error occurred",error);
                 this.setState({
                     errorText: "An error occurred"
                 });
+                this.props.handleUnsuccessfulAuth();
             });
         
         event.preventDefault();
@@ -58,9 +61,6 @@ export default class Login extends Component {
                <h1>LOGIN TO ACCESS YOUR DASHBOARD</h1>
 
                <div>{this.state.errorText}</div>
-
-               <h2>{this.state.email}</h2>
-               <h2>{this.state.password}</h2>
 
                <form onSubmit={this.handleSubmit}>
                   <input 

@@ -1,13 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
+import { prependOnceListener } from "cluster";
 
-export default class NavigationComponent extends Component {
-    constructor() {
-        super() ;
-    }
-
-    render() {
+const NavigationComponent = (props) => {
+    const dynamicLink = (route, linkText) => {
         return (
+        <div className="nav-link-wrapper">
+            <NavLink to="blog" activeClassName="nav-link-active">
+                Blog
+            </NavLink>
+        </div>
+        );
+    }; 
+
+    return (
             <div className="nav-wrapper">
                 <div className="left-side">
                     <div className="nav-link-wrapper">
@@ -25,15 +31,16 @@ export default class NavigationComponent extends Component {
                             Contact
                         </NavLink>
                     </div>
-                    <div className="nav-link-wrapper">
-                        <NavLink to="blog" activeClassName="nav-link-active">
-                            Blog
-                        </NavLink>
-                    </div>
+
+                    {true ? "do this" : "do something else"}
+
+                    {props.loggedInStatus === "LOGED_IN" ? ( 
+                        dynamicLink("/blog", "Blog") 
+                    ): null}
                 </div>
                 
                 <div className="right-side">Nina Balan</div>
             </div>
         );
     }
-}
+export default NavigationComponent;
