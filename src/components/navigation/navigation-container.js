@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { FontAwesome } from "@fortawesome/react-fontawesome";
 import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
 
@@ -55,12 +56,6 @@ const NavigationComponent = (props) => {
                         </NavLink>
                     </div>
 
-                    <div className="nav-link-wrapper">
-                        <NavLink to="/portfolio-manager" activeClassName="nav-link-active">
-                            Portfolio Manager
-                        </NavLink>
-                    </div>
-
                     {props.loggedInStatus === "LOGED_IN" ? ( 
                         dynamicLink("/portfolio-manager", "Portfolio Manager") 
                     ): null}
@@ -69,10 +64,13 @@ const NavigationComponent = (props) => {
                 <div className="right-side">
                     Nina Balan
                     {props.loggedInStatus === "LOGGED_IN" ? (
-                        <a onClick={handleSingnOut}>Sign Out</a>
+                        <a onClick={handleSingnOut}>
+                            <FontAwesomeIcon icon="sign-out-alt" />
+                            </a>
                     ) : null}
                 </div>
             </div>
         );
-    }
+    };
+
 export default withRouter(NavigationComponent);
